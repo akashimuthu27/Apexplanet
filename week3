@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Interactive Quiz</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f0f9ff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        flex-direction: column;
+    }
+
+    .quiz-box {
+        background: white;
+        width: 350px;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        text-align: center;
+        color: #1e40af;
+    }
+
+    .question {
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    button {
+        width: 100%;
+        padding: 10px;
+        margin-top: 8px;
+        border: none;
+        border-radius: 6px;
+        background: #2563eb;
+        color: white;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #1d4ed8;
+    }
+
+    .result {
+        text-align: center;
+        margin-top: 15px;
+        font-weight: bold;
+    }
+
+    /* Joke API section styling (added) */
+    .joke-box {
+        background: white;
+        width: 350px;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    }
+
+    .joke-text {
+        margin-top: 10px;
+        font-size: 15px;
+        color: #0f172a;
+    }
+</style>
+</head>
+
+<body>
+
+<!-- QUIZ SECTION (UNCHANGED) -->
+<div class="quiz-box">
+    <h2>Web Technology Quiz</h2>
+    <div id="question" class="question"></div>
+    <div id="options"></div>
+    <div class="result" id="result"></div>
+</div>
+
+<!-- JOKE API SECTION (ADDED) -->
+<div class="joke-box">
+    <h2>Random Joke</h2>
+    <button onclick="getJoke()">Get Joke</button>
+    <div class="joke-text" id="jokeText"></div>
+</div>
+
+<script>
+    /* QUIZ LOGIC (UNCHANGED) */
+    const quizData = [
+        {
+            question: "What does HTML stand for?",
+            options: [
+                "Hyper Trainer Marking Language",
+                "Hyper Text Markup Language",
+                "High Text Machine Language",
+                "Hyper Tool Multi Language"
+            ],
+            answer: 1
+        },
+        {
+            question: "Which language is used for styling web pages?",
+            options: ["HTML", "JQuery", "CSS", "XML"],
+            answer: 2
+        },
+        {
+            question: "Which is used for web page behavior?",
+            options: ["HTML", "CSS", "JavaScript", "PHP"],
+            answer: 2
+        }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    function loadQuestion() {
+        document.getElementById("result").textContent = "";
+
+        let q = quizData[currentQuestion];
+        document.getElementById("question").textContent = q.question;
+
+        let optionsDiv = document.getElementById("options");
+        optionsDiv.innerHTML = "";
+
+        q.options.forEach((option, index) => {
+            let btn = document.createElement("button");
+            btn.textContent = option;
+            btn.onclick = () => checkAnswer(index);
+            optionsDiv.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(selected) {
+        if (selected === quizData[currentQuestion].answer) {
+            score++;
+        }
+
+        currentQuestion++;
+
+        if (currentQuestion < quizData.length) {
+            loadQuestion();
+        } else {
+            document.getElementById("question").textContent =
+                "Quiz Completed!";
+            document.getElementById("options").innerHTML = "";
+            document.getElementById("result").textContent =
+                "Your Score: " + score + " / " + quizData.length;
+        }
+    }
+
+    loadQuestion();
+
+    /* JOKE API FUNCTION (ADDED) */
+    function getJoke() {
+        fetch("https://official-joke-api.appspot.com/random_joke")
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("jokeText").textContent =
+                    data.setup + " — " + data.punchline;
+            })
+            .catch(() => {
+                document.getElementById("jokeText").textContent =
+                    "Failed to load joke!";
+            });
+    }
+</script>
+
+</body>
+</html>
