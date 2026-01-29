@@ -1,1 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact & To-Do App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #dbeafe, #f0f9ff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: #ffffff;
+            width: 350px;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #1e3a8a;
+            margin-bottom: 15px;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 6px;
+            border: 1px solid #c7d2fe;
+            font-size: 14px;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .error {
+            color: red;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .output {
+            margin-top: 12px;
+            background: #eff6ff;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        /* To-Do Section */
+        .todo-section {
+            margin-top: 25px;
+        }
+
+        .todo-section h3 {
+            text-align: center;
+            color: #065f46;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul li {
+            background: #ecfdf5;
+            margin-top: 8px;
+            padding: 8px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        ul li button {
+            background: #dc2626;
+            padding: 4px 8px;
+            font-size: 12px;
+            border-radius: 4px;
+        }
+
+        ul li button:hover {
+            background: #b91c1c;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- CONTACT FORM -->
+    <h2>Contact Form</h2>
+    <form id="contactForm">
+        <input type="text" id="name" placeholder="Enter your name">
+        <input type="email" id="email" placeholder="Enter your email">
+        <div class="error" id="errorMsg"></div>
+        <button type="submit">Submit</button>
+    </form>
+
+    <div class="output" id="result"></div>
+
+    <!-- TO-DO FORM -->
+    <div class="todo-section">
+        <h3>To-Do List</h3>
+        <input type="text" id="todoInput" placeholder="Enter a task">
+        <button onclick="addTask()">Add Task</button>
+        <ul id="todoList"></ul>
+    </div>
+
+</div>
+
+<script>
+    // Contact Form Validation
+    document.getElementById("contactForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        let name = document.getElementById("name").value.trim();
+        let email = document.getElementById("email").value.trim();
+        let errorMsg = document.getElementById("errorMsg");
+        let result = document.getElementById("result");
+
+        let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+        if (name === "" || email === "") {
+            errorMsg.textContent = "All fields are required!";
+            result.innerHTML = "";
+        } 
+        else if (!email.match(emailPattern)) {
+            errorMsg.textContent = "Enter a valid email address!";
+            result.innerHTML = "";
+        } 
+        else {
+            errorMsg.textContent = "";
+            result.innerHTML = `
+                <strong>Name:</strong> ${name}<br>
+                <strong>Email:</strong> ${email}
+            `;
+            this.reset();
+        }
+    });
+
+    // To-Do List
+    function addTask() {
+        let input = document.getElementById("todoInput");
+        let task = input.value.trim();
+
+        if (task === "") return;
+
+        let li = document.createElement("li");
+        li.innerHTML = `
+            ${task}
+            <button onclick="this.parentElement.remove()">Delete</button>
+        `;
+
+        document.getElementById("todoList").appendChild(li);
+        input.value = "";
+    }
+</script>
+
+</body>
+</html>
