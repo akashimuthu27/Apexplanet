@@ -1,0 +1,43 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: Arial, sans-serif; }
+
+header {
+    background: #222;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+nav a {
+    color: white;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+section {
+    padding: 40px;
+}
+
+.project-card {
+    background: #f4f4f4;
+    padding: 15px;
+    margin: 10px 0;
+}
+
+form input, textarea {
+    width: 100%;
+    margin: 8px 0;
+    padding: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    background: black;
+    color: white;
+    border: none;
+}
+
+@media (max-width: 600px) {
+    header { flex-direction: column; }
+}
