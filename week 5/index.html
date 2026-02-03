@@ -2,25 +2,33 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>SmartShop</title>
+  <title>SmartShop | Capstone Project</title>
+
+  <!-- Mobile responsiveness -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- CSS -->
   <link rel="stylesheet" href="css/style.min.css">
 </head>
-
 <body>
+
 <header>
   <h1>SmartShop</h1>
-  <select id="filter">
+
+  <select id="categoryFilter">
     <option value="all">All</option>
     <option value="electronics">Electronics</option>
     <option value="books">Books</option>
   </select>
 </header>
 
-<main id="products"></main>
+<main id="productContainer"></main>
 
-<footer>© 2026 SmartShop</footer>
+<footer>
+  <p>© 2026 SmartShop</p>
+</footer>
 
+<!-- JavaScript -->
 <script src="js/app.min.js"></script>
 </body>
 </html>
